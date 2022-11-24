@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "../../App";
 import s from './Todolist.module.css'
 import {AddItemForm} from "../AddItemForm/AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 type PropsType = {
     id: string
