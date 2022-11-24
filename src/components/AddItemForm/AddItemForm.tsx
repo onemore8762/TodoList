@@ -1,5 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import s from './AddItemForm.module.css'
+import {IconButton, TextField} from "@mui/material";
+import {ControlPoint} from "@mui/icons-material";
 
 type AddItemFormType = {
     addItem: (title: string) => void
@@ -30,13 +32,18 @@ export const AddItemForm = (props: AddItemFormType) => {
     return (
         <div className={s.addItemForm}>
             <div className={s.inputWrapper}>
-                <input value={title}
-                       onChange={onChangeHandler}
-                       onKeyDown={onKeyDownHandler}
-                       className={error ? s.error : ''}/>
-                <button onClick={addTask}>+</button>
+                <TextField value={title}
+                           size={'small'}
+                           variant={'outlined'}
+                           label={'Type value'}
+                           onChange={onChangeHandler}
+                           onKeyDown={onKeyDownHandler}
+                           helperText={error}
+                           error={!!error}/>
+                <IconButton onClick={addTask} color={'primary'}>
+                    <ControlPoint/>
+                </IconButton>
             </div>
-            {error && <div className={s.errorMessage}>Field is required</div>}
         </div>
     )
 }

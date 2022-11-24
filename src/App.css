@@ -1,9 +1,8 @@
-.App {
-    display: flex;
-    padding: 30px;
+
+li {
+    list-style-type: none;
 }
 
-.App > div {
-    margin-right: 50px;
+ul {
+    padding-left: 0;
 }
-
