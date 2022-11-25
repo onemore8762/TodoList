@@ -9,7 +9,7 @@ import {Menu} from "@mui/icons-material";
 
 export type FilterValuesType = 'all' | 'completed' | 'active'
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -55,7 +55,7 @@ export const App = () => {
 
     const addTodoList = (title: string) => {
         let newTodolistId = v1()
-        setTodolists([...todolists, {id: newTodolistId, title: title, filter: 'all'}])
+        setTodolists([ {id: newTodolistId, title: title, filter: 'all'}, ...todolists])
         setTasks({...tasks, [newTodolistId]: []})
     }
 
@@ -98,7 +98,7 @@ export const App = () => {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container style={{padding:'10px'}}>
+                <Grid container style={{padding:'15px'}}>
                     <AddItemForm addItem={addTodoList}/>
                 </Grid>
                 <Grid container spacing={10}>
