@@ -1,25 +1,30 @@
 import {v1} from "uuid";
+import {TodoListType} from "../api/todolists-api";
 
 const REMOVE_TODOLIST = 'REMOVE_TODOLIST'
 const ADD_TODOLIST = 'ADD_TODOLIST'
 const CHANGE_TODOLIST_TITLE = 'CHANGE_TODOLIST_TITLE'
 const CHANGE_FILTER = 'CHANGE_FILTER'
 
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
 export type FilterValuesType = 'all' | 'completed' | 'active'
 
+export type TodoListTypeDomain = TodoListType & {
+    filter: FilterValuesType
+}
 
-const initialState :  TodolistType[] = []
-export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionType) : TodolistType[] => {
+const initialState: TodoListTypeDomain[] = []
+export const todolistsReducer = (state: TodoListTypeDomain[] = initialState, action: ActionType): TodoListTypeDomain[] => {
     switch (action.type) {
         case REMOVE_TODOLIST:
             return state.filter(tl => tl.id !== action.id)
         case ADD_TODOLIST:
-            return [{id: action.id, title: action.title, filter: 'all'}, ...state]
+            return [{
+                id: action.id,
+                title: action.title,
+                filter: 'all',
+                addedDate: '',
+                order: 0
+            }, ...state]
         case CHANGE_TODOLIST_TITLE:
             return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
         case CHANGE_FILTER:
@@ -48,9 +53,9 @@ export const addTodolistAC = (title: string) => {
 } //  Добавление todoList
 
 export const changeTodolistTitleAC = (todolistId: string, title: string) => {
-    return {type: CHANGE_TODOLIST_TITLE, title , id: todolistId} as const
+    return {type: CHANGE_TODOLIST_TITLE, title, id: todolistId} as const
 } // Изменение названия todoList
 
 export const changeTodolistFilterAC = (todolistId: string, filter: FilterValuesType) => {
-    return {type: CHANGE_FILTER, filter , id: todolistId} as const
+    return {type: CHANGE_FILTER, filter, id: todolistId} as const
 } // Изменение фильтрации todoList

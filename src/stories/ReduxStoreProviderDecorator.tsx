@@ -5,6 +5,7 @@ import { v1 } from 'uuid'
 import { AppRootState } from '../store/store'
 import {tasksReducer} from '../store/tasks-reducer'
 import {todolistsReducer} from '../store/todolists-reducer'
+import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
 
 const rootReducer = combineReducers({
@@ -14,17 +15,43 @@ const rootReducer = combineReducers({
 
 const initialGlobalState = {
     todoLists: [
-        {id: 'todolistId1', title: 'What to learn', filter: 'all'},
-        {id: 'todolistId2', title: 'What to buy', filter: 'all'}
+        {id: 'todolistId1', title: 'What to learn', filter: 'all',  addedDate: '', order: 0},
+        {id: 'todolistId2', title: 'What to buy', filter: 'all',  addedDate: '', order: 0}
     ],
     tasks: {
-        ['todolistId1']: [
-            {id: v1(), title: 'HTML&CSS', isDone: true},
-            {id: v1(), title: 'JS', isDone: false}
+        'todolistId1': [
+            {id: v1(), title: 'HTML&CSS', isDone: true, description: '', completed: false,
+                status: TaskStatuses.New, priority: TaskPriorities.Low, startDate: '', deadline: '',
+                todoListId: '', order: 0, addedDate: ''},
+            {id: v1(), title: 'JS', isDone: false,description: '',
+                completed: false,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                order: 0,
+                addedDate: ''}
         ],
-        ['todolistId2']: [
-            {id: v1(), title: 'Milk', isDone: false},
-            {id: v1(), title: 'React Book', isDone: true}
+        'todolistId2': [
+            {id: v1(), title: 'Milk', isDone: false, description: '',
+                completed: false,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                order: 0,
+                addedDate: ''},
+            {id: v1(), title: 'React Book', isDone: true, description: '',
+                completed: false,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                order: 0,
+                addedDate: ''}
         ]
     }
 }
