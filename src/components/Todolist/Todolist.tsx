@@ -3,8 +3,8 @@ import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {FilterValuesType} from "../../AppWithRedux";
 import {Task} from "../Task/Task";
+import {FilterValuesType} from "../../store/todolists-reducer";
 
 type PropsType = {
     id: string
