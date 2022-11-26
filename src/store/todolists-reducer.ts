@@ -1,5 +1,5 @@
-import {FilterValuesType} from "../../App";
 import {v1} from "uuid";
+import {FilterValuesType} from "../AppWithRedux";
 
 const REMOVE_TODOLIST = 'REMOVE_TODOLIST'
 const ADD_TODOLIST = 'ADD_TODOLIST'

@@ -3,25 +3,26 @@ import s from './AddItemForm.module.css'
 import {IconButton, TextField} from "@mui/material";
 import {ControlPoint} from "@mui/icons-material";
 
-type AddItemFormType = {
+export type AddItemFormType = {
     addItem: (title: string) => void
 }
 
-export const AddItemForm = (props: AddItemFormType) => {
-
+export const AddItemForm = React.memo ((props: AddItemFormType) => {
+    console.log('AddItemForm is called')
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
+        error && console.log(error)
         error && setError(null)
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            addTask()
+            addItem()
         }
     }
-    const addTask = () => {
+    const addItem = () => {
         if (title.trim()) {
             props.addItem(title.trim())
             setTitle('')
@@ -40,10 +41,10 @@ export const AddItemForm = (props: AddItemFormType) => {
                            onKeyDown={onKeyDownHandler}
                            helperText={error}
                            error={!!error}/>
-                <IconButton onClick={addTask} color={'primary'}>
+                <IconButton onClick={addItem} color={'primary'}>
                     <ControlPoint/>
                 </IconButton>
             </div>
         </div>
     )
-}
+})

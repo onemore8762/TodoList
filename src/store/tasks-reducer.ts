@@ -1,7 +1,7 @@
 
 import {v1} from "uuid";
 import {AddTodolistACType, RemoveTodolistACType} from "./todolists-reducer";
-import {TaskType} from "../Todolist/Todolist";
+import {TaskType} from "../components/Todolist/Todolist";
 
 const REMOVE_TASK = 'REMOVE_TASK'
 const ADD_TASK = 'ADD_TASK'
