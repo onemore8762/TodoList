@@ -6,24 +6,11 @@ const settings = {
         "API-KEY": '32dd40b0-0151-4ced-8454-330669a6e58e'
     }
 }
-
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     ...settings
 })
 
-export type TodoListType = {
-    id: string
-    title: string
-    addedDate: string
-    order: number
-}
-
-type ResponseType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    data: D
-}
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
@@ -37,35 +24,8 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4
 }
-export type TaskType = {
-    id: string
-    title: string
-    description: string
-    todoListId: string
-    order: number
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-    addedDate: string
-    status: TaskStatuses
 
-}
-export type UpdateTaskModelType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-}
-
-
-type GetTaskResponse = {
-    error: string | null
-    totalCount: number
-    items: TaskType[]
-}
-
+// api
 export const todoListsApi = {
     getTodoLists() {
         return instance.get<TodoListType[]>('todo-lists')
@@ -93,3 +53,43 @@ export const todoListsApi = {
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
     }
 }
+
+// types
+export type TodoListType = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
+}
+type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    data: D
+}
+export type TaskType = {
+    id: string
+    title: string
+    description: string
+    todoListId: string
+    order: number
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+    addedDate: string
+    status: TaskStatuses
+
+}
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
+type GetTaskResponse = {
+    error: string | null
+    totalCount: number
+    items: TaskType[]
+}
+
