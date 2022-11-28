@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {todoListsApi} from "../api/todolists-api";
+import {TaskPriorities, TaskStatuses, todoListsApi, UpdateTaskModelType} from "../api/todolists-api";
 
 export default {
     title: 'API'
@@ -71,6 +71,41 @@ export const DeleteTask = () => {
         let todolistId = 'fe9929ea-c476-4367-8d52-40441183233e'
         let taskId = ''
         todoListsApi.deleteTasks(todolistId, taskId)
+            .then((response) => {
+                setState(response.data)
+            })
+    }, [])
+
+    return <div>{JSON.stringify(state)}</div>
+}
+
+export const CreateTask = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        let todolistId = 'fe9929ea-c476-4367-8d52-40441183233e'
+        let title = 'Deniskad'
+        todoListsApi.createTask(todolistId, title)
+            .then((response) => {
+                setState(response.data)
+            })
+    }, [])
+
+    return <div>{JSON.stringify(state)}</div>
+}
+export const UpdateTask = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        let todolistId = 'fe9929ea-c476-4367-8d52-40441183233e'
+        let taskId = '2802d4e5-e646-4933-b5ac-99d5eeac443e'
+        let model : UpdateTaskModelType= {
+            deadline: '',
+            description: '',
+            priority: TaskPriorities.Low,
+            startDate: '',
+            title: 'test',
+            status: TaskStatuses.New
+        }
+        todoListsApi.updateTask(todolistId,taskId, model)
             .then((response) => {
                 setState(response.data)
             })

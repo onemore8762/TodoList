@@ -4,6 +4,7 @@ import {action} from "@storybook/addon-actions";
 import {Task} from "../components/Task/Task";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
+
 export default {
     title: 'Task Component',
     component: Task,
@@ -22,7 +23,7 @@ export const TaskFalse = Template.bind({});
 TaskTrue.args = {
     task: {
         id: '1', title: 'Task1', description: '',
-        completed: false,
+
         status: TaskStatuses.Completed,
         priority: TaskPriorities.Low,
         startDate: '',
@@ -41,7 +42,6 @@ TaskTrue.args = {
 TaskFalse.args = {
     task: {
         id: '1', title: 'Task1', description: '',
-        completed: false,
         status: TaskStatuses.New,
         priority: TaskPriorities.Low,
         startDate: '',

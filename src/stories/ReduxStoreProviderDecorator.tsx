@@ -20,11 +20,11 @@ const initialGlobalState = {
     ],
     tasks: {
         'todolistId1': [
-            {id: v1(), title: 'HTML&CSS', isDone: true, description: '', completed: false,
+            {id: v1(), title: 'HTML&CSS', isDone: true, description: '',
                 status: TaskStatuses.New, priority: TaskPriorities.Low, startDate: '', deadline: '',
                 todoListId: '', order: 0, addedDate: ''},
             {id: v1(), title: 'JS', isDone: false,description: '',
-                completed: false,
+
                 status: TaskStatuses.New,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -35,7 +35,7 @@ const initialGlobalState = {
         ],
         'todolistId2': [
             {id: v1(), title: 'Milk', isDone: false, description: '',
-                completed: false,
+
                 status: TaskStatuses.New,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -44,7 +44,7 @@ const initialGlobalState = {
                 order: 0,
                 addedDate: ''},
             {id: v1(), title: 'React Book', isDone: true, description: '',
-                completed: false,
+
                 status: TaskStatuses.New,
                 priority: TaskPriorities.Low,
                 startDate: '',

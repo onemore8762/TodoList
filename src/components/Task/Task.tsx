@@ -5,6 +5,7 @@ import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {TaskStatuses, TaskType} from "../../api/todolists-api";
 
+
 type TaskPropsType = {
     todolistId: string
     task: TaskType
