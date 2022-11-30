@@ -11,11 +11,16 @@ export default {
 
 const Template: ComponentStory<typeof AddItemForm> = (args) => {
   return <>
-    <AddItemForm {...args} />
+    <AddItemForm {...args}/>
   </>
 };
 
 export const AddItemFormBaseExample = Template.bind({});
+export const AddItemFormBaseExampleDisabled = Template.bind({});
 AddItemFormBaseExample.args = {
   addItem: action('onChange'),
+};
+AddItemFormBaseExampleDisabled.args = {
+  addItem: action('onChange'),
+  disabled: true
 };

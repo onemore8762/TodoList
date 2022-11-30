@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import {App} from "./App";
-import {ReduxStoreProviderDecorator} from "../stories/ReduxStoreProviderDecorator";
+import {ReduxStoreProviderDecorator} from "../stories/decorators/ReduxStoreProviderDecorator";
 
 export default {
   title: 'AppWithRedux Component',
@@ -11,7 +11,7 @@ export default {
 
 
 const Template: ComponentStory<typeof App> = () => {
-  return <App />
+  return <App demo={true} />
 
 };
 

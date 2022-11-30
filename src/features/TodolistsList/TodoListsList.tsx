@@ -16,13 +16,23 @@ import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./Todolist/Todolist";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {Navigate} from "react-router-dom";
 
-export const TodoListsList = () => {
+type PropsType = {
+    demo?: boolean
+}
+
+export const TodoListsList : React.FC<PropsType> = ({demo = false}) => {
     const tasks = useAppSelector(state => state.tasks)
     const todolists = useSelector<AppRootStateType, TodoListTypeDomain[]>(state => state.todoLists)
+    const isLoggenIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
 
+
     useEffect(() => {
+        if(demo || !isLoggenIn){
+            return
+        }
         dispatch(fetchTodoListsTC())
     }, [dispatch])
 
@@ -58,6 +68,10 @@ export const TodoListsList = () => {
         dispatch(changeTodoListsTitleTC(todolistId, newValue))
     }, [dispatch])
 
+    if(!isLoggenIn) {
+        return <Navigate to={'/login'}></Navigate>
+    }
+
     return (
         <>
             <Grid container style={{padding: '15px'}}>
@@ -70,9 +84,7 @@ export const TodoListsList = () => {
                         return <Grid item key={tl.id}>
                             <Paper style={{padding: '10px'}}>
                                 <Todolist
-                                    id={tl.id}
-                                    title={tl.title}
-                                    filter={tl.filter}
+                                    todolist={tl}
                                     tasks={tasksForTodolist}
                                     addTask={addTask}
                                     changeFilter={changeFilter}
@@ -81,6 +93,7 @@ export const TodoListsList = () => {
                                     changeTodolistTitle={changeTodolistTitle}
                                     removeTask={removeTask}
                                     removeTodoList={removeTodoList}
+                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>

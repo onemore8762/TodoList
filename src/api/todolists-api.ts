@@ -17,6 +17,7 @@ export enum TaskStatuses {
     Completed = 2,
     Draft = 3
 }
+
 export enum TaskPriorities {
     Low = 0,
     Middle = 1,
@@ -47,10 +48,29 @@ export const todoListsApi = {
         return instance.delete<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`)
     },
     createTask(todoListId: string, title: string) {
-        return instance.post<ResponseType<{item: TaskType}>>(`todo-lists/${todoListId}/tasks`, {title: title})
+        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todoListId}/tasks`, {title: title})
     },
     updateTask(todoListId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
+    }
+}
+
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instance.post<ResponseType<{ userId?: number }>>('auth/login', data)
+    },
+    me(){
+        return instance.get<ResponseType<{ id: number; email: string; login: string}>>('auth/me')
+    },
+    logout(){
+        return instance.delete<ResponseType<{userId?: number}>>('auth/login')
     }
 }
 
@@ -61,7 +81,7 @@ export type TodoListType = {
     addedDate: string
     order: number
 }
-type ResponseType<D = {}> = {
+export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     data: D
@@ -87,6 +107,7 @@ export type UpdateTaskModelType = {
     startDate: string
     deadline: string
 }
+
 type GetTaskResponse = {
     error: string | null
     totalCount: number

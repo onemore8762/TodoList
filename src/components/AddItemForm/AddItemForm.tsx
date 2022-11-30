@@ -5,9 +5,10 @@ import {ControlPoint} from "@mui/icons-material";
 
 export type AddItemFormType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = React.memo ((props: AddItemFormType) => {
+export const AddItemForm = React.memo (({addItem,disabled = false}: AddItemFormType) => {
     console.log('AddItemForm is called')
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -19,12 +20,12 @@ export const AddItemForm = React.memo ((props: AddItemFormType) => {
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            addItem()
+            addItemHandler()
         }
     }
-    const addItem = () => {
+    const addItemHandler = () => {
         if (title.trim()) {
-            props.addItem(title.trim())
+            addItem(title.trim())
             setTitle('')
         } else {
             setError('Field is required')
@@ -40,8 +41,10 @@ export const AddItemForm = React.memo ((props: AddItemFormType) => {
                            onChange={onChangeHandler}
                            onKeyDown={onKeyDownHandler}
                            helperText={error}
-                           error={!!error}/>
-                <IconButton onClick={addItem} color={'primary'}>
+                           error={!!error}
+                           disabled={disabled}
+                    />
+                <IconButton onClick={addItemHandler} color={'primary'} disabled={disabled}>
                     <ControlPoint/>
                 </IconButton>
             </div>
