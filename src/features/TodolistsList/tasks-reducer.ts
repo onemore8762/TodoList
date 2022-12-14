@@ -57,11 +57,11 @@ export const setTaskAC = (tasks: TaskType[], todolistId: string) =>
 
 // thunks
 export const fetchTaskTC = (todolistId: string): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: 'loading'}))
     todoListsApi.getTasks(todolistId)
         .then((response) => {
             dispatch(setTaskAC(response.data.items, todolistId))
-            dispatch(setAppStatusAC('succeeded'))
+            dispatch(setAppStatusAC({status: 'succeeded'}))
         })
 }
 export const removeTaskTC = (todolistId: string, taskId: string): AppThunk => (dispatch) => {
@@ -71,12 +71,12 @@ export const removeTaskTC = (todolistId: string, taskId: string): AppThunk => (d
         })
 }
 export const addTaskTC = (todolistId: string, title: string): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: 'loading'}))
     todoListsApi.createTask(todolistId, title)
         .then((response) => {
             if (response.data.resultCode === 0) {
                 dispatch(addTaskAC(response.data.data.item))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
                 handlerServerAppError(response.data, dispatch)
             }

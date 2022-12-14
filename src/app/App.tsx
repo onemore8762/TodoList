@@ -17,7 +17,7 @@ import {useAppDispatch, useAppSelector} from "./hooks";
 import {Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import {initializeAppTC} from "./app-reducer";
-import {logoutTC} from "../features/Login/login-reducer";
+import {logoutTC} from "../features/Login/auth-reducer";
 
 type PropsType = {
     demo?: boolean

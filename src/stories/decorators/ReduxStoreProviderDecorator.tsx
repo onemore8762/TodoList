@@ -8,7 +8,7 @@ import {todolistsReducer} from '../../features/TodolistsList/todolists-reducer'
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
 import {appReducer} from "../../app/app-reducer";
 import thunk from "redux-thunk";
-import {authReducer} from "../../features/Login/login-reducer";
+import {authReducer} from "../../features/Login/auth-reducer";
 
 
 const rootReducer = combineReducers({
