@@ -7,12 +7,12 @@ test('ids should be equals', () => {
     const startTasksState: TasksStateType = {}
     const startTodolistsState: Array<TodoListTypeDomain> = []
 
-    const action = addTodolistAC({
-        id: 'wasdv2123',
-        title: 'string',
-        addedDate: 'string',
-        order: 1,
-    })
+    const action = addTodolistAC({todolist: {
+            id: 'wasdv2123',
+            title: 'string',
+            addedDate: 'string',
+            order: 1,
+        }})
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)
@@ -52,7 +52,7 @@ test('property with todolistId should be deleted', () => {
         ]
     }
 
-    const action = removeTodolistAC('todolistId2')
+    const action = removeTodolistAC({todolistId: 'todolistId2'})
 
     const endState = tasksReducer(startState, action)
 
