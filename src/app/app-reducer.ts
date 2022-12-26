@@ -1,50 +1,53 @@
-import {AppThunk} from "./store";
 import {authAPI} from "../api/todolists-api";
 import {setIsLoggedInAC} from "../features/Login/auth-reducer";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AxiosError} from "axios";
+import {handlerServerAppError, handlerServerNetworkError} from "../utils/error-utils";
 
-const initialState: InitialStateAppType = {
-    status: 'idle',
-    error: null,
-    isInitialized: false
-}
+export const initializeAppTC = createAsyncThunk('app/initializeAppTC', async (arg, {dispatch, rejectWithValue}) => {
+    try {
+        const response = await authAPI.me()
+        if(response.data.resultCode === 0){
+            dispatch(setIsLoggedInAC({value: true}))
+        } else{
+            handlerServerAppError(response.data, dispatch)
+            return rejectWithValue(null)
+        }
+    }catch (err){
+        const error = err as AxiosError
+        handlerServerNetworkError(error, dispatch)
+        return rejectWithValue(null)
+    }
+})
 
 
 const slice = createSlice({
     name: 'app',
-    initialState:initialState,
+    initialState:{
+        status: 'idle',
+        error: null,
+        isInitialized: false
+    } as InitialStateAppType,
     reducers:{
-        setAppInitializedAC(state, action: PayloadAction<{value: boolean}>){
-            state.isInitialized = action.payload.value
-        },
         setAppStatusAC(state, action: PayloadAction<{status: RequestStatusType}>){
             state.status = action.payload.status
         },
         setAppErrorAC(state, action: PayloadAction<{error: string | null}>){
             state.error = action.payload.error
         },
+    },
+    extraReducers: builder => {
+        builder.addCase(initializeAppTC.fulfilled, (state)=> {
+            state.isInitialized = true
+        })
     }
 })
 
 export const appReducer = slice.reducer
 
 // actions
-export const {setAppErrorAC, setAppStatusAC, setAppInitializedAC} = slice.actions
+export const {setAppErrorAC, setAppStatusAC} = slice.actions
 
-
-// thunk
-export const initializeAppTC =  () : AppThunk => (dispatch) => {
-    authAPI.me()
-        .then((res) => {
-            if(res.data.resultCode === 0){
-                dispatch(setIsLoggedInAC({value: true}))
-
-            } else{
-
-            }
-            dispatch(setAppInitializedAC({value: true}))
-    })
-}
 
 // types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -59,5 +62,4 @@ export type InitialStateAppType = {
 export type AppActionsType =
     | ReturnType<typeof setAppErrorAC>
     | ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof setAppInitializedAC>
 
