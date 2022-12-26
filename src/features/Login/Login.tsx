@@ -33,8 +33,14 @@ export const Login = () => {
             password: '',
             rememberMe: false
         },
-        onSubmit: values => {
-            dispatch(loginTC(values))
+        onSubmit: async (values, {setFieldError}) => {
+            const action = await dispatch(loginTC(values))
+            if(loginTC.rejected.match(action)){
+                if(action.payload?.fieldsErrors?.length){
+                    const error = action.payload.fieldsErrors[0]
+                    setFieldError(error.field, error.error)
+                }
+            }
         },
     });
 

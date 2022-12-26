@@ -2,21 +2,16 @@ import {
     addTodolistAC,
     AddTodolistACType,
     removeTodolistAC,
-    RemoveTodolistACType, setTodolistsAC,
+    RemoveTodolistACType,
+    setTodolistsAC,
     SetTodolistsACType
 } from "../todolists-reducer";
-import {
-    TaskPriorities,
-    TaskStatuses,
-    TaskType,
-    todoListsApi,
-    UpdateTaskModelType
-} from "../../../../api/todolists-api";
+import {TaskPriorities, TaskStatuses, TaskType, todoListsApi, UpdateTaskModelType} from "../../../../api/todolists-api";
 import {AppRootStateType, AppThunk} from "../../../../app/store";
 import {setAppStatusAC} from "../../../../app/app-reducer";
 import {handlerServerAppError, handlerServerNetworkError} from "../../../../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import axios from "axios";
+import {AxiosError} from "axios";
 
 const initialState: TasksStateType = {}
 
@@ -54,11 +49,9 @@ export const addTaskTC = createAsyncThunk('tasks/addTaskTC',
             } else {
                 handlerServerAppError(response.data, thunkAPI.dispatch)
             }
-        } catch (error) {
-            debugger
-            if (axios.isAxiosError(error)) {
-                handlerServerNetworkError(error, thunkAPI.dispatch)
-            }
+        } catch (err) {
+            const error = err as AxiosError
+            handlerServerNetworkError(error, thunkAPI.dispatch)
         }
     }
 )
