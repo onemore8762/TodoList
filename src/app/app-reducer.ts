@@ -10,7 +10,6 @@ const initialState: InitialStateAppType = {
 }
 
 
-
 const slice = createSlice({
     name: 'app',
     initialState:initialState,
