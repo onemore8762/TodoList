@@ -9,6 +9,8 @@ const initialState: InitialStateAppType = {
     isInitialized: false
 }
 
+
+
 const slice = createSlice({
     name: 'app',
     initialState:initialState,

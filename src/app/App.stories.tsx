@@ -1,12 +1,15 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {App} from "./App";
-import {ReduxStoreProviderDecorator} from "../stories/decorators/ReduxStoreProviderDecorator";
+import {
+  HashRouterProviderDecorator,
+  ReduxStoreProviderDecorator
+} from "../stories/decorators/ReduxStoreProviderDecorator";
 
 export default {
   title: 'AppWithRedux Component',
   component: App,
-  decorators: [ReduxStoreProviderDecorator]
+  decorators: [ReduxStoreProviderDecorator, HashRouterProviderDecorator]
 } as ComponentMeta<typeof App>;
 
 

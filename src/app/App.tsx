@@ -24,11 +24,11 @@ type PropsType = {
 }
 export const App : React.FC<PropsType>= ({demo = false}) => {
     console.log('App is called')
-    const status = useAppSelector(state => state.app.status)
-    const isInitialized = useAppSelector(state => state.app.isInitialized)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useAppDispatch()
 
+    const status = useAppSelector(state => state.app.status)
+    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(initializeAppTC())
     },[dispatch])

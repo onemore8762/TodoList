@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
-import {addTaskTC, removeTaskTC, updateTaskTC} from "./tasks-reducer";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "./Todolist/Task/tasks-reducer";
 import {
     addTodoListsTC,
     changeTodolistFilterAC,
@@ -9,7 +9,7 @@ import {
     FilterValuesType,
     removeTodoListsTC,
     TodoListTypeDomain
-} from "./todolists-reducer";
+} from "./Todolist/todolists-reducer";
 import React, {useCallback, useEffect} from "react";
 import {TaskStatuses} from "../../api/todolists-api";
 import {Grid, Paper} from "@mui/material";
