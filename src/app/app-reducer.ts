@@ -4,23 +4,6 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import {handlerServerAppError, handlerServerNetworkError} from "../utils/error-utils";
 
-export const initializeAppTC = createAsyncThunk('app/initializeAppTC', async (arg, {dispatch, rejectWithValue}) => {
-    try {
-        const response = await authAPI.me()
-        if(response.data.resultCode === 0){
-            dispatch(setIsLoggedInAC({value: true}))
-        } else{
-            handlerServerAppError(response.data, dispatch)
-            return rejectWithValue(null)
-        }
-    }catch (err){
-        const error = err as AxiosError
-        handlerServerNetworkError(error, dispatch)
-        return rejectWithValue(null)
-    }
-})
-
-
 const slice = createSlice({
     name: 'app',
     initialState:{
@@ -44,6 +27,24 @@ const slice = createSlice({
 })
 
 export const appReducer = slice.reducer
+
+
+export const initializeAppTC = createAsyncThunk('app/initializeAppTC', async (arg, {dispatch, rejectWithValue}) => {
+    try {
+        const response = await authAPI.me()
+        if(response.data.resultCode === 0){
+            dispatch(setIsLoggedInAC({value: true}))
+        } else{
+            handlerServerAppError(response.data, dispatch)
+            return rejectWithValue(null)
+        }
+    }catch (err){
+        const error = err as AxiosError
+        handlerServerNetworkError(error, dispatch)
+        return rejectWithValue(null)
+    }
+})
+
 
 // actions
 export const {setAppErrorAC, setAppStatusAC} = slice.actions

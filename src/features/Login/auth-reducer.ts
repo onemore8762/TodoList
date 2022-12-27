@@ -55,10 +55,10 @@ const slice = createSlice({
         }
     },
     extraReducers: (builder => {
-        builder.addCase(loginTC.fulfilled, (state, action) => {
+        builder.addCase(loginTC.fulfilled, (state) => {
                 state.isLoggedIn = true
         });
-        builder.addCase(logoutTC.fulfilled, (state, action) => {
+        builder.addCase(logoutTC.fulfilled, (state) => {
                 state.isLoggedIn = false
         });
     })
