@@ -3,13 +3,14 @@ import s from './AddItemForm.module.css'
 import {IconButton, TextField} from "@mui/material";
 import {ControlPoint} from "@mui/icons-material";
 
+export type ItemHelperType = {setError: (error: string) => void, setTitle: (title: string) => void}
+
 export type AddItemFormType = {
-    addItem: (title: string) => void
+    addItem: (title: string, helper: ItemHelperType) => void
     disabled?: boolean
 }
 
-export const AddItemForm = React.memo (({addItem,disabled = false}: AddItemFormType) => {
-    console.log('AddItemForm is called')
+export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -23,12 +24,16 @@ export const AddItemForm = React.memo (({addItem,disabled = false}: AddItemFormT
             addItemHandler()
         }
     }
-    const addItemHandler = () => {
-        if (title.trim()) {
-            addItem(title.trim())
-            setTitle('')
-        } else {
-            setError('Field is required')
+    const addItemHandler =  () => {
+        try{
+            if (title.trim()) {
+                addItem(title,{setTitle, setError})
+
+            } else {
+                setError('Field is required')
+            }
+        }catch (error: any){
+            setError(error.message)
         }
     }
     return (
@@ -43,8 +48,8 @@ export const AddItemForm = React.memo (({addItem,disabled = false}: AddItemFormT
                            helperText={error}
                            error={!!error}
                            disabled={disabled}
-                    />
-                <IconButton onClick={addItemHandler} color={'primary'} disabled={disabled}>
+                />
+                <IconButton onClick={addItemHandler} color={'primary'} disabled={disabled} style={{marginLeft: '10px'}}>
                     <ControlPoint/>
                 </IconButton>
             </div>

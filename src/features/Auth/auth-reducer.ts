@@ -1,23 +1,22 @@
 import {setAppStatusAC} from "../../app/app-reducer";
-import {authAPI, FieldErrorType, LoginParamsType} from "../../api/todolists-api";
+import {authAPI, LoginParamsType} from "../../api/todolists-api";
 import {handlerServerAppError, handlerServerNetworkError} from "../../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
+import {ThunkError} from "../../app/store";
 
 
-export const loginTC = createAsyncThunk< undefined, LoginParamsType, {
-    rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }
-}>('auth/loginTC',
-    async (data: LoginParamsType, {dispatch, rejectWithValue}) => {
+export const loginTC = createAsyncThunk< undefined, LoginParamsType, ThunkError>('auth/loginTC',
+    async (params: LoginParamsType, {dispatch, rejectWithValue}) => {
         try {
-            const response = await authAPI.login(data)
-            if (response.data.resultCode === 0) {
+            const data = await authAPI.login(params)
+            if (data.resultCode === 0) {
                 dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
-                handlerServerAppError(response.data, dispatch)
+                handlerServerAppError(data, dispatch)
                 return rejectWithValue({
-                    errors: response.data.messages,
-                    fieldsErrors: response.data.fieldsErrors
+                    errors: data.messages,
+                    fieldsErrors: data.fieldsErrors
                 })
             }
         } catch (err) {
@@ -29,11 +28,11 @@ export const loginTC = createAsyncThunk< undefined, LoginParamsType, {
 
 export const logoutTC = createAsyncThunk('auth/logoutTC', async (arg, thunkApi) => {
     try {
-        const response = await authAPI.logout()
-        if (response.data.resultCode === 0) {
+        const data = await authAPI.logout()
+        if (data.resultCode === 0) {
             thunkApi.dispatch(setAppStatusAC({status: 'succeeded'}))
         } else {
-            handlerServerAppError(response.data, thunkApi.dispatch)
+            handlerServerAppError(data, thunkApi.dispatch)
             return thunkApi.rejectWithValue(null)
         }
     } catch (err) {

@@ -1,8 +1,8 @@
 import {authAPI} from "../api/todolists-api";
-import {setIsLoggedInAC} from "../features/Login/auth-reducer";
+import {setIsLoggedInAC} from "../features/Auth/auth-reducer";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
-import {handlerServerAppError, handlerServerNetworkError} from "../utils/error-utils";
+import {handlerServerNetworkError} from "../utils/error-utils";
 
 const slice = createSlice({
     name: 'app',
@@ -31,12 +31,9 @@ export const appReducer = slice.reducer
 
 export const initializeAppTC = createAsyncThunk('app/initializeAppTC', async (arg, {dispatch, rejectWithValue}) => {
     try {
-        const response = await authAPI.me()
-        if(response.data.resultCode === 0){
+        const data = await authAPI.me()
+        if(data.resultCode === 0){
             dispatch(setIsLoggedInAC({value: true}))
-        } else{
-            handlerServerAppError(response.data, dispatch)
-            return rejectWithValue(null)
         }
     }catch (err){
         const error = err as AxiosError

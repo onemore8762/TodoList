@@ -8,9 +8,10 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useAppSelector} from "../../common/hooks/useAppSelector";
 import {loginTC} from "./auth-reducer";
 import {Navigate} from "react-router-dom";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch";
 
 export const Login = () => {
     const dispatch = useAppDispatch()
@@ -43,7 +44,6 @@ export const Login = () => {
             }
         },
     });
-
     if(isLoggedIn) {
         return <Navigate to={'/'}></Navigate>
     }

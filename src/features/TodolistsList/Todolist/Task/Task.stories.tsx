@@ -1,13 +1,14 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
-import {action} from "@storybook/addon-actions";
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {Task} from "./Task";
 import {TaskPriorities, TaskStatuses} from "../../../../api/todolists-api";
+import {ReduxStoreProviderDecorator} from "../../../../stories/decorators/ReduxStoreProviderDecorator";
 
 
 export default {
     title: 'Task Component',
     component: Task,
+    decorators: [ReduxStoreProviderDecorator]
 } as ComponentMeta<typeof Task>;
 
 
@@ -33,9 +34,6 @@ TaskTrue.args = {
         addedDate: ''
     },
     todolistId: 'todolistId1',
-    removeTask: action('removeTask'),
-    changeTaskStatus: action('changeTaskStatus'),
-    changeTaskTitle: action('changeTaskTitle'),
 };
 
 
@@ -51,7 +49,4 @@ TaskFalse.args = {
         addedDate: ''
     },
     todolistId: 'todolistId2',
-    removeTask: action('removeTask'),
-    changeTaskStatus: action('changeTaskStatus'),
-    changeTaskTitle: action('changeTaskTitle'),
 };

@@ -2,7 +2,6 @@
 .inputWrapper{
     display: flex;
     align-items: start;
-    gap: 10px
 }
 
 .error {

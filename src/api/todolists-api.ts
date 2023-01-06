@@ -30,28 +30,38 @@ export enum TaskPriorities {
 export const todoListsApi = {
     getTodoLists() {
         return instance.get<TodoListType[]>('todo-lists')
+            .then(response => response.data)
+
     },
     createTodoLists(title: string) {
         return instance.post<ResponseType<{ item: TodoListType }>>('todo-lists', {title: title})
+            .then(response => response.data)
     },
     deleteTodoLists(todoListId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todoListId}`)
+            .then(response => response.data)
+
     },
     updateTodoLists(todoListId: string, title: string) {
         return instance.put<ResponseType>(`todo-lists/${todoListId}`, {title: title})
+            .then(response => response.data)
     },
 
     getTasks(todoListId: string) {
         return instance.get<GetTaskResponse>(`todo-lists/${todoListId}/tasks`)
+            .then(response => response.data)
     },
     deleteTasks(todoListId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`)
+            .then(response => response.data)
     },
     createTask(todoListId: string, title: string) {
         return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todoListId}/tasks`, {title: title})
+            .then(response => response.data)
     },
     updateTask(todoListId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
+            .then(response => response.data)
     }
 }
 
@@ -65,12 +75,15 @@ export type LoginParamsType = {
 export const authAPI = {
     login(data: LoginParamsType) {
         return instance.post<ResponseType<{ userId?: number }>>('auth/login', data)
+            .then(response => response.data)
     },
-    me(){
+    me() {
         return instance.get<ResponseType<{ id: number; email: string; login: string }>>('auth/me')
+            .then(response => response.data)
     },
-    logout(){
+    logout() {
         return instance.delete<ResponseType<{ userId?: number }>>('auth/login')
+            .then(response => response.data)
     }
 }
 

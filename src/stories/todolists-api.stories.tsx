@@ -8,8 +8,8 @@ export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         todoListsApi.getTodoLists()
-            .then((response) => {
-                setState(response.data[0])
+            .then((data) => {
+                setState(data[0])
             })
 
     }, [])
@@ -57,8 +57,8 @@ export const GetTasks = () => {
     useEffect(() => {
         let todolistId = 'fe9929ea-c476-4367-8d52-40441183233e'
         todoListsApi.getTasks(todolistId)
-            .then((response) => {
-                setState(response.data)
+            .then((data) => {
+                setState(data)
             })
     }, [])
 
