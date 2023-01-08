@@ -15,7 +15,6 @@ const rootReducers = combineReducers({
     auth: authReducer
 })
 
-// export const store = createStore(rootReducers, applyMiddleware(thunkMiddleware))
 export const store = configureStore({
     reducer: rootReducers,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleware),
@@ -23,11 +22,13 @@ export const store = configureStore({
 
 type AppStoreActionsType = TodoListsActionsType | AppActionsType | LoginActionsType
 
+// types
 export type AppRootStateType = ReturnType<typeof store.getState>
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppStoreActionsType>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppStoreActionsType>
 export type ThunkError = {
     rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }
 }
+
 //@ts-ignore
 window.store = store

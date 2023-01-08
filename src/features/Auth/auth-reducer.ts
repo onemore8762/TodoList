@@ -1,44 +1,35 @@
 import {setAppStatusAC} from "../../app/app-reducer";
 import {authAPI, LoginParamsType} from "../../api/todolists-api";
-import {handlerServerAppError, handlerServerNetworkError} from "../../utils/error-utils";
+import {handleAsyncServerAppError, handlerAsyncServerNetworkError} from "../../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import {ThunkError} from "../../app/store";
 
 
 export const loginTC = createAsyncThunk< undefined, LoginParamsType, ThunkError>('auth/loginTC',
-    async (params: LoginParamsType, {dispatch, rejectWithValue}) => {
+    async (params: LoginParamsType, thunkAPI) => {
         try {
             const data = await authAPI.login(params)
             if (data.resultCode === 0) {
-                dispatch(setAppStatusAC({status: 'succeeded'}))
+                thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
-                handlerServerAppError(data, dispatch)
-                return rejectWithValue({
-                    errors: data.messages,
-                    fieldsErrors: data.fieldsErrors
-                })
+                return handleAsyncServerAppError(data, thunkAPI)
             }
         } catch (err) {
-            const error = err as AxiosError
-            handlerServerNetworkError(error, dispatch)
-            return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+            return handlerAsyncServerNetworkError(err as AxiosError, thunkAPI)
         }
     })
 
-export const logoutTC = createAsyncThunk('auth/logoutTC', async (arg, thunkApi) => {
+export const logoutTC = createAsyncThunk('auth/logoutTC', async (arg, thunkAPI) => {
     try {
         const data = await authAPI.logout()
         if (data.resultCode === 0) {
-            thunkApi.dispatch(setAppStatusAC({status: 'succeeded'}))
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
         } else {
-            handlerServerAppError(data, thunkApi.dispatch)
-            return thunkApi.rejectWithValue(null)
+            return handleAsyncServerAppError(data, thunkAPI)
         }
     } catch (err) {
-        const error = err as AxiosError
-        handlerServerNetworkError(error, thunkApi.dispatch)
-        return thunkApi.rejectWithValue(null)
+        return handlerAsyncServerNetworkError(err as AxiosError, thunkAPI)
     }
 })
 
