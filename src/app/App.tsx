@@ -33,19 +33,22 @@ export const App : React.FC<PropsType>= ({demo = false}) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(initializeAppTC())
+        if(!demo && isInitialized){
+            dispatch(initializeAppTC())
+        }
     },[dispatch])
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
     }, [dispatch])
+
     if(!isInitialized){
         return  <div style={{position:'fixed',width:'100%', top:'30%', textAlign: 'center'}}>
             <CircularProgress/>
         </div>
     }
     return (
-        <div className="App">
+        <div className="App" >
             <ErrorSnackBar/>
             <AppBar position={'static'}>
                 <Toolbar>
